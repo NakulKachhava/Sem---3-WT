@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Information</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    <script type="text/javascript">
+        const Faculty = [
+            {
+                name: "Prof. Chintan Kanani",
+                occupation: "Head of The Department",
+                experience: "16+",
+                mobile: 9978918186
+            },
+            {
+                name: "Prof. Akash Siddhpura",
+                occupation: "Assistant Professor",
+                experience: "12+",
+                mobile: 9429794513
+            },
+            {
+                name: "Prof. Vishal Makwana",
+                occupation: "Assistant Professor",
+                experience: "12+",
+                mobile: 8671010867
+            },
+            {
+                name: "Prof. Payal Hinsu",
+                occupation: "Assistant Professor",
+                experience: "9+",
+                mobile: 9573918186
+            },
+            {
+                name: "Prof. Rajkumar Gondaliya",
+                occupation: "Assistant Professor",
+                experience: "8+",
+                mobile: 9723232741
+            }
+        ];
+
+        document.write("<table class='table table-striped'>");
+        document.write("<thead class='table-dark'>");
+        document.write("<tr>");
+        document.write("<th>Name</th>");
+        document.write("<th>Occupation</th>");
+        document.write("<th>Experience</th>");
+        document.write("<th>Mobile No.</th>");
+        document.write("</tr>");
+        document.write("</thead>");
+        document.write("<tbody>");
+        
+        for (let i = 0; i < Faculty.length; i++) {
+            document.write("<tr>");
+            document.write("<td>" + Faculty[i].name + "</td>");
+            document.write("<td>" + Faculty[i].occupation + "</td>");
+            document.write("<td>" + Faculty[i].experience + "</td>");
+            document.write("<td>" + Faculty[i].mobile + "</td>");
+            document.write("</tr>");
+        }
+
+        document.write("</tbody>");
+        document.write("</table>");
+    </script>
+</body>
+</html>
