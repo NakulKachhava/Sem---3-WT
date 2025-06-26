@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p id="myp">Lorem ipsum dolor sit amet, consectetur adipisicing elit. In reiciendis recusandae voluptatum id.</p>
+    <button onclick="changeInPropertiesofp1()">Change font size</button>
+    <button onclick="changeInPropertiesofp2()">Change font color</button>
+    <button onclick="changeInPropertiesofp3()">Change to bold</button><br><br>
+    <input type="text" id="mytext">
+    <button onclick="changeInProperties()">Change to Password</button>
+    <script>
+        function changeInProperties() {
+        iref = document.getElementById("mytext");
+        iref.type = "password";
+        }
+        function changeInPropertiesofp1() {
+        pref = document.getElementById("myp");
+        pref.style.fontSize = 2+"rem"; 
+        }
+        function changeInPropertiesofp2() {
+        pref = document.getElementById("myp");
+        pref.style.color = "purple"; 
+        }
+        function changeInPropertiesofp3() {
+        pref = document.getElementById("myp");
+        pref.style.fontWeight = "bold"; 
+        }
+    </script>
+</body>
+</html>
