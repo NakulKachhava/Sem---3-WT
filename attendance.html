@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+    <style>
+        .myh1{
+            color: rgb(0, 149, 255);
+        }
+    </style>
+</head>
+<body>
+    <h1 align="center" class="myh1">Student Attendance Tracker</h1>
+	<script type="text/javascript">
+        student = ['Jiya Kyada',
+            'Shah Dhvani Hitesh',
+            'Saraya Mohit Haresh',
+            'Zalavadiya Heet Siddharth',
+            'Darshil Dobariya',
+            'Nafisa Gandhi',
+            'Vasani Yashvi Niteshbhai',
+            'Delvadiya Manavkumar Kirtibhai',
+            'Ashara Palak Gopalbhai',
+            'Lunagariya Greshi Kamleshbhai',
+            'Nanavati Shrushti Gargesh',
+            'Ranpara Jay Manishbhai',
+            'Disha Mehta',
+            'Thummar Niraj Bhaveshbhai',
+            'Kachhava Nakul Umeshbhai',
+            'Kanabar Urva Darshanbhai',
+            'Nakar Dhruvil Hitesh',
+            'Poshiya Priyanshi Ajaybhai',
+            'Baravalia Dharitri Manharbhai',
+            'Muchhara Kashish Hiteshbhai'
+        ];
+        document.write('<table class="student-row"  cellpadding="8" cellspacing="5" style="width: 80%; margin: 0 auto; background-color: #f8fafd;">');
+        document.write('<tr>');
+        document.write('<th>Roll No.</th>');
+        document.write('<th>Name</th>');
+        document.write('<th>Status</th>');
+        document.write('<th>Action</th>');
+        document.write('</tr>');
+		for(i=101;i<121;i++){
+			document.write(
+                `<tr>
+                    <td style="width: 100px; text-align: right;"><span class="student-roll">${i}</span> - </td>
+                    <td style="text-align: left;" width="300px"><span class="student-name">${student[i - 101]}</span></td>
+                    <td style="text-align: center;" width="150px"><span id="+i+">Absent</span></td>
+                    <td style="width: 120px; text-align: center;"><button class="present-btn" onclick="markPresent(${i})">Present</button></td>
+                    <td style="width: 120px; text-align: center;"><button class="absent-btn" onclick="markAbsent(${i})">Absent</button></td>
+                </tr>`
+            );
+		}
+        document.write('</table>');
+        document.write('<h6>Total Present = </h6>');
+        document.write('<h6>Total Absent = </h6>');
+        document.write('<h6 id="absentStudent" >Roll No. of Absent Student = </h6>');
+	</script>
+	<br/>
+	<button onclick="takeAttendance()">Take attendance</button>
+	<button onclick="allPresent()">All Present</button>
+	<button onclick="resetAttendance()">Reset Attendance</button>
+	<script type="text/javascript">
+        
+		function allPresent(){
+			for(i=101; i < student.length+101; i++){
+				document.getElementsById("+i+").innerHTML = Present;
+			}
+            totalPresent = student.length;
+		}
+
+		function allAbsent(){
+			for(i=101; i < student.length+101; i++){
+				document.getElementsById("+i+").innerHTML = Absent;
+			}
+            totalAbsent = 0;
+		}
+
+		function takeAttendance(){
+			absentNos = "";
+
+			for(i=101; i < student.length+101; i++){
+                statusRef = document.getElementsById("+i+").innerHTML;
+				if(statusRef == "Absent"){
+					absentNos += i + ",";
+				}
+			}
+            document.getElementById("absentStudent").innerHTML = "Roll No. of Absent Student = " + absentNos;
+		}
+        
+	</script>
+</body>
+</html>
