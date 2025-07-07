@@ -3,70 +3,70 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculty Information</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJx3X6B92w5fC5c9v9n9LwZL+nXsfdq0LkqU0yRaZ0l0tTtv6kcQfE1u1yK5" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    <title>Document</title>
 </head>
 <body>
-    <div class="container mt-5">
-        <h2 class="mb-4">Faculty Information</h2>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Name</th>
-                        <th>Occupation</th>
-                        <th>Experience</th>
-                        <th>Mobile No.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <script type="text/javascript">
-                        const Faculty = [
-                            {
-                                name: "Prof. Chintan Kanani",
-                                occupation: "Head of The Department",
-                                experience: "16+",
-                                mobile: 9978918186
-                            },
-                            {
-                                name: "Prof. Akash Siddhpura",
-                                occupation: "Assistant Professor",
-                                experience: "12+",
-                                mobile: 9429794513
-                            },
-                            {
-                                name: "Prof. Vishal Makwana",
-                                occupation: "Assistant Professor",
-                                experience: "12+",
-                                mobile: 8671010867
-                            },
-                            {
-                                name: "Prof. Payal Hinsu",
-                                occupation: "Assistant Professor",
-                                experience: "9+",
-                                mobile: 9573918186
-                            },
-                            {
-                                name: "Prof. Rajkumar Gondaliya",
-                                occupation: "Assistant Professor",
-                                experience: "8+",
-                                mobile: 9723232741
-                            }
-                        ];
+    <label for="mytxt">Username :</label>
+    <input type="text" id="mytxt" placeholder="Enter Username">
+    <button id="addEditbBtn" onclick="addStudent()">Add</button>
+    <table border="1">
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="tblbody">
 
-                        for (let i = 0; i < Faculty.length; i++) {
-                            document.write("<tr>");
-                            document.write("<td>" + Faculty[i].name + "</td>");
-                            document.write("<td>" + Faculty[i].occupation + "</td>");
-                            document.write("<td>" + Faculty[i].experience + "</td>");
-                            document.write("<td>" + Faculty[i].mobile + "</td>");
-                            document.write("</tr>");
-                        }
-                    </script>
-                </tbody>
-            </table>
-        </div>
-    </div>
+        </tbody>
+    </table>
+    <script>
+        arr = []
+        editIndex = -1
+        document.getElementById("mytxt").focus()
+
+        function display(){
+            temp = ""
+            for(i=0; i < arr.length; i++){
+                temp += `<tr>
+                    <td>${i+1}</td>
+                    <td>${arr[i]}</td>
+                    <td><button onclick="editStudent(${i})">Edit</button><button onclick="deleteStudent(${i})">Delete</button></td>    
+                </tr>`
+            }
+            document.getElementById("tblbody").innerHTML = temp
+        }
+
+        function addStudent(){
+            uname = document.getElementById("mytxt").value
+            if(editIndex != -1){
+                arr[editIndex] = uname
+                editIndex = -1
+                document.getElementById("addEditbBtn").innerHTML = "Add"
+            }
+            else{
+                if(uname == ""){
+                    alert("Student Name is not given")
+                }
+                else{
+                    arr.push(uname)
+                }
+            }
+            document.getElementById("mytxt").value = ""
+            display()
+            document.getElementById("mytxt").focus()
+        }
+
+        function editStudent(idx){
+            editIndex = idx
+            document.getElementById("mytxt").value = arr[idx]
+            document.getElementById("addEditbBtn").innerHTML = "Edit"
+            document.getElementById("mytxt").focus()
+        }
+
+        function deleteStudent(idx){
+            arr.splice(idx,1)
+            display()
+        }
+    </script>
 </body>
 </html>
