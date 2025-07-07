@@ -1,19 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Student Attendance Tracker</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .myh1{
+        .myh1 {
             color: rgb(0, 149, 255);
+            margin: 30px 0;
+        }
+        .btn {
+            margin: 2px;
+        }
+        table {
+            background-color: #f8fafd;
         }
     </style>
 </head>
 <body>
-    <h1 align="center" class="myh1">Student Attendance Tracker</h1>
-	<script type="text/javascript">
-        student = ['Jiya Kyada',
+    <div class="container text-center">
+        <h1 class="myh1">Student Attendance Tracker</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped w-75 mx-auto">
+                <thead class="table-primary">
+                    <tr>
+                        <th>Roll No.</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                        <th colspan="2">Action</th>
+                    </tr>
+                </thead>
+                <tbody id="student-table-body"></tbody>
+            </table>
+        </div>
+
+        <div class="mt-3">
+            <h6>Total Present = <span id="presentCount">0</span></h6>
+            <h6>Total Absent = <span id="absentCount">0</span></h6>
+            <h6>Roll No. of Absent Student = <span id="absentStudent"></span></h6>
+        </div>
+
+        <div class="mt-3">
+            <button class="btn btn-primary" onclick="takeAttendance()">Take Attendance</button>
+            <button class="btn btn-secondary" onclick="resetAttendance()">Reset Attendance</button>
+        </div>
+    </div>
+
+    <script>
+        const student = [
+            'Jiya Kyada',
             'Shah Dhvani Hitesh',
             'Saraya Mohit Haresh',
             'Zalavadiya Heet Siddharth',
@@ -34,61 +70,73 @@
             'Baravalia Dharitri Manharbhai',
             'Muchhara Kashish Hiteshbhai'
         ];
-        document.write('<table class="student-row"  cellpadding="8" cellspacing="5" style="width: 80%; margin: 0 auto; background-color: #f8fafd;">');
-        document.write('<tr>');
-        document.write('<th>Roll No.</th>');
-        document.write('<th>Name</th>');
-        document.write('<th>Status</th>');
-        document.write('<th>Action</th>');
-        document.write('</tr>');
-		for(i=101;i<121;i++){
-			document.write(
-                `<tr>
-                    <td style="width: 100px; text-align: right;"><span class="student-roll">${i}</span> - </td>
-                    <td style="text-align: left;" width="300px"><span class="student-name">${student[i - 101]}</span></td>
-                    <td style="text-align: center;" width="150px"><span id="+i+">Absent</span></td>
-                    <td style="width: 120px; text-align: center;"><button class="present-btn" onclick="markPresent(${i})">Present</button></td>
-                    <td style="width: 120px; text-align: center;"><button class="absent-btn" onclick="markAbsent(${i})">Absent</button></td>
-                </tr>`
-            );
-		}
-        document.write('</table>');
-        document.write('<h6>Total Present = </h6>');
-        document.write('<h6>Total Absent = </h6>');
-        document.write('<h6 id="absentStudent" >Roll No. of Absent Student = </h6>');
-	</script>
-	<br/>
-	<button onclick="takeAttendance()">Take attendance</button>
-	<button onclick="allPresent()">All Present</button>
-	<button onclick="resetAttendance()">Reset Attendance</button>
-	<script type="text/javascript">
-        
-		function allPresent(){
-			for(i=101; i < student.length+101; i++){
-				document.getElementsById("+i+").innerHTML = Present;
-			}
+
+        let totalPresent = student.length;
+        let totalAbsent = 0;
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const tbody = document.getElementById("student-table-body");
+
+            for (let i = 101; i < 121; i++) {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td style="text-align: right;">${i} -</td>
+                    <td style="text-align: left;">${student[i - 101]}</td>
+                    <td id="status-${i}" style="text-align: center;">Present</td>
+                    <td><button class="btn btn-success" onclick="markPresent(${i})">Present</button></td>
+                    <td><button class="btn btn-danger" onclick="markAbsent(${i})">Absent</button></td>
+                `;
+                tbody.appendChild(row);
+            }
+
+            updateCounts();
+        });
+
+        function markPresent(i) {
+            let sref = document.getElementById(`status-${i}`);
+            if (sref.innerHTML === "Absent") {
+                sref.innerHTML = "Present";
+                totalPresent++;
+                totalAbsent--;
+                updateCounts();
+            }
+        }
+
+        function markAbsent(i) {
+            let sref = document.getElementById(`status-${i}`);
+            if (sref.innerHTML === "Present") {
+                sref.innerHTML = "Absent";
+                totalPresent--;
+                totalAbsent++;
+                updateCounts();
+            }
+        }
+
+        function resetAttendance() {
+            for (let i = 101; i < student.length + 101; i++) {
+                document.getElementById(`status-${i}`).innerHTML = "Present";
+            }
             totalPresent = student.length;
-		}
-
-		function allAbsent(){
-			for(i=101; i < student.length+101; i++){
-				document.getElementsById("+i+").innerHTML = Absent;
-			}
             totalAbsent = 0;
-		}
+            updateCounts();
+            document.getElementById("absentStudent").innerHTML = "";
+        }
 
-		function takeAttendance(){
-			absentNos = "";
+        function takeAttendance() {
+            let absentNos = "";
+            for (let i = 101; i < student.length + 101; i++) {
+                let status = document.getElementById(`status-${i}`).innerHTML;
+                if (status === "Absent") {
+                    absentNos += i + ", ";
+                }
+            }
+            document.getElementById("absentStudent").innerHTML = absentNos;
+        }
 
-			for(i=101; i < student.length+101; i++){
-                statusRef = document.getElementsById("+i+").innerHTML;
-				if(statusRef == "Absent"){
-					absentNos += i + ",";
-				}
-			}
-            document.getElementById("absentStudent").innerHTML = "Roll No. of Absent Student = " + absentNos;
-		}
-        
-	</script>
+        function updateCounts() {
+            document.getElementById("presentCount").innerText = totalPresent;
+            document.getElementById("absentCount").innerText = totalAbsent;
+        }
+    </script>
 </body>
 </html>
