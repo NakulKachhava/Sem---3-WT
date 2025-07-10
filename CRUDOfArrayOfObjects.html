@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-6">
+                <label for="prname">Product Name :</label>
+                <input type="text" id="prname" placeholder="Enter Product Name"><br><br>
+                <label for="prprice">Product Price :</label>
+                <input type="text" id="prprice" placeholder="Enter Product Price" style="margin-left: 7px;"><br>
+            </div>
+            <div class="col-5">
+                <label for="prcategory">Product Category :</label>
+                <input type="text" id="prcategory" placeholder="Enter Product Category">
+                <button id="addEditbBtn" onclick="addStudent()" style="margin-left: 20px;">Add</button><br><br>
+                <label for="prurl">Product URL :</label>
+                <input type="text" id="prurl" placeholder="Enter Product URL" style="margin-left: 35px;"><br>
+            </div>
+            <div class="col-1">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="card" style="width: 18rem;" id="cbody">
+        
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        arr = []
+        editIndex = -1
+        document.getElementById("prname").focus()
+
+        function display(){
+            temp = ""
+            for(i=0; i < arr.length; i++){
+                temp += `
+                <img src="${arr[i].purl}" class="card-img-top" alt="image not found">
+                <div class="card-body">
+                    <h3 class="card-title text-center">${arr[i].pcategory}</h3>
+                    <h6 class="card-title text-center">${arr[i].pname}</h6>
+                    <p class="card-text text-center">${arr[i].pprice}</p>
+                    <a class="btn btn-success text-center" style="margin-left: 66px" onclick="editStudent(${i})">Edit</a>
+                    <a class="btn btn-danger text-center" onclick="deleteStudent(${i})">Delete</a>
+                </div>`
+            }
+            document.getElementById("cbody").innerHTML = temp
+        }
+
+        function addStudent(){
+            prname = document.getElementById("prname").value
+            prprice = document.getElementById("prprice").value
+            prcategory = document.getElementById("prcategory").value
+            prurl = document.getElementById("prurl").value
+            
+            product = {
+                pname : prname,
+                pprice : prprice,
+                pcategory : prcategory,
+                purl : prurl
+            }
+
+            if(editIndex != -1){
+                arr[editIndex] = product
+                editIndex = -1
+                document.getElementById("addEditbBtn").innerHTML = "Add"
+            }
+            else{
+                if(prname == "" || prprice == "" || prcategory == "" || prurl == ""){
+                    alert("Student Name is not given")
+                }
+                else{
+                    arr.push(product)
+                }
+            }
+            document.getElementById("prname").value = ""
+            document.getElementById("prprice").value = ""
+            document.getElementById("prcategory").value = ""
+            document.getElementById("prurl").value = ""
+            display()
+            document.getElementById("prname").focus()
+        }
+
+        function editStudent(idx){
+            editIndex = idx
+            document.getElementById("prname").value = arr[idx].pname
+            document.getElementById("prprice").value = arr[idx].pprice
+            document.getElementById("prcategory").value = arr[idx].pcategory
+            document.getElementById("prurl").value = arr[idx].purl
+            document.getElementById("addEditbBtn").innerHTML = "Edit"
+            document.getElementById("prname").focus()
+        }
+
+        function deleteStudent(idx){
+            arr.splice(idx,1)
+            display()
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+</body>
+</html>
