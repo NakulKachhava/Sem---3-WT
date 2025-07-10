@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label for="mytxt">Username :</label>
+    <input type="text" id="mytxt" placeholder="Enter Username">
+    <button id="addEditbBtn" onclick="addStudent()">Add</button>
+    <table border="1">
+        <thead>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="tblbody">
+
+        </tbody>
+    </table>
+    <script>
+        arr = []
+        editIndex = -1
+        document.getElementById("mytxt").focus()
+
+        function display(){
+            temp = ""
+            for(i=0; i < arr.length; i++){
+                temp += `<tr>
+                    <td>${i+1}</td>
+                    <td>${arr[i]}</td>
+                    <td><button onclick="editStudent(${i})">Edit</button><button onclick="deleteStudent(${i})">Delete</button></td>    
+                </tr>`
+            }
+            document.getElementById("tblbody").innerHTML = temp
+        }
+
+        function addStudent(){
+            uname = document.getElementById("mytxt").value
+            if(editIndex != -1){
+                arr[editIndex] = uname
+                editIndex = -1
+                document.getElementById("addEditbBtn").innerHTML = "Add"
+            }
+            else{
+                if(uname == ""){
+                    alert("Student Name is not given")
+                }
+                else{
+                    arr.push(uname)
+                }
+            }
+            document.getElementById("mytxt").value = ""
+            display()
+            document.getElementById("mytxt").focus()
+        }
+
+        function editStudent(idx){
+            editIndex = idx
+            document.getElementById("mytxt").value = arr[idx]
+            document.getElementById("addEditbBtn").innerHTML = "Edit"
+            document.getElementById("mytxt").focus()
+        }
+
+        function deleteStudent(idx){
+            arr.splice(idx,1)
+            display()
+        }
+    </script>
+</body>
+</html>
